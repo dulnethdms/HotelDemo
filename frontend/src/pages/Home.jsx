@@ -38,26 +38,7 @@ export default function Home() {
         <a href="#welcome" className="hero__scroll" aria-label="Scroll down"><span /></a>
       </section>
 
-      <section className="section" id="welcome">
-        <div className="container split">
-          <Reveal className="split__text">
-            <span className="eyebrow">Welcome</span>
-            <h2>{text('intro_title', 'A private stretch of paradise')}</h2>
-            <p>{text('intro_text')}</p>
-            <div className="stats">
-              {stats.map(([n, l]) => (
-                <div key={l}><strong>{n}</strong><span>{l}</span></div>
-              ))}
-            </div>
-            <Link to="/about" className="btn btn--outline">About Us</Link>
-          </Reveal>
-          <Reveal className="split__media" delay={150}>
-            <SmartImg src={text('intro_image')} alt="Mora Mila Hotel grounds" />
-            <div className="split__badge">Beachfront<br />since 2026</div>
-          </Reveal>
-        </div>
-      </section>
-
+      
       <section className="section section--foam">
         <div className="container">
           <SectionTitle eyebrow="Highlights" title="Why guests fall in love with us" />
