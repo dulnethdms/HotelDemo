@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Replace www.example.com with your real domain before deploying -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.example.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://www.example.com/about</loc></url>
+  <url><loc>https://www.example.com/accommodation</loc></url>
+  <url><loc>https://www.example.com/gallery</loc></url>
+  <url><loc>https://www.example.com/promotions</loc></url>
+  <url><loc>https://www.example.com/location</loc></url>
+  <url><loc>https://www.example.com/contact</loc></url>
+</urlset>

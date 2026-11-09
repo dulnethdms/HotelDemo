@@ -1,0 +1,127 @@
+/* ===== Ocean Paradise Resort - base styles (custom CSS only) ===== */
+:root {
+  --navy: #082032;
+  --deep: #0b3c5d;
+  --teal: #0e7c86;
+  --aqua: #6fd0cf;
+  --foam: #eaf6f6;
+  --sand: #f7f0e3;
+  --gold: #c9a35b;
+  --gold-d: #b08a43;
+  --ink: #1d2b36;
+  --muted: #5d6f7b;
+  --white: #fff;
+  --line: #dde7ea;
+  --radius: 16px;
+  --shadow: 0 20px 50px -24px rgba(8, 32, 50, 0.45);
+  --ff-head: 'Cormorant Garamond', Georgia, serif;
+  --ff-body: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --container: 1200px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4 { font-family: var(--ff-head); line-height: 1.15; margin: 0 0 0.6rem; color: var(--navy); font-weight: 600; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: 1.55rem; }
+p { margin: 0 0 1rem; }
+ul { margin: 0; padding: 0; list-style: none; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }
+
+.container { width: min(var(--container), 100% - 3rem); margin-inline: auto; }
+.section { padding: clamp(4rem, 9vw, 7.5rem) 0; }
+.section--foam { background: var(--foam); }
+.section--navy { background: linear-gradient(160deg, var(--navy), var(--deep)); color: #d6e6ee; }
+.section--navy h2, .section--navy h3 { color: #fff; }
+.center { text-align: center; }
+.muted { color: var(--muted); }
+.mt { margin-top: 2.5rem; }
+.link { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--gold); color: var(--navy); padding: 0.6rem 1rem; z-index: 999; }
+.skip-link:focus { left: 0; }
+
+.eyebrow { display: inline-block; font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 0.7rem; }
+.eyebrow--light { color: var(--aqua); margin-bottom: 0.3rem; }
+.section--navy .eyebrow { color: var(--aqua); }
+
+.section-title { max-width: 680px; margin-bottom: 3rem; }
+.section-title--center { margin-inline: auto; text-align: center; }
+.section-title p { color: var(--muted); }
+.section--navy .section-title p { color: #b9d0dc; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.95rem 2rem; border-radius: 999px; border: 2px solid transparent;
+  font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.82rem;
+  transition: transform 0.3s var(--ease), background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.btn:hover { transform: translateY(-3px); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn--gold { background: var(--gold); color: var(--navy); box-shadow: 0 10px 24px -10px rgba(201, 163, 91, 0.9); }
+.btn--gold:hover { background: #d8b571; }
+.btn--ghost { border-color: rgba(255, 255, 255, 0.7); color: #fff; backdrop-filter: blur(4px); }
+.btn--ghost:hover { background: #fff; color: var(--navy); }
+.btn--outline { border-color: var(--navy); color: var(--navy); }
+.btn--outline:hover { background: var(--navy); color: #fff; }
+.btn--sm { padding: 0.6rem 1.3rem; }
+.btn--danger { background: #b3402f; color: #fff; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { animation: none !important; }
+}
+
+.img-fallback { background: linear-gradient(135deg, var(--teal), var(--deep)); width: 100%; height: 100%; min-height: 160px; }
+
+/* Grids */
+.grid { display: grid; gap: 1.8rem; }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1000px) { .grid--3, .grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; } }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+/* Loader */
+.loader { display: flex; gap: 0.5rem; justify-content: center; padding: 3rem 0; }
+.loader span { width: 12px; height: 12px; border-radius: 50%; background: var(--teal); animation: bounce 1s infinite ease-in-out; }
+.loader span:nth-child(2) { animation-delay: 0.15s; }
+.loader span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes bounce { 0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
+
+/* Forms (shared with admin) */
+.field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.1rem; }
+.field label { font-size: 0.85rem; font-weight: 500; color: var(--navy); }
+.field input, .field textarea, .field select {
+  font: inherit; padding: 0.8rem 1rem; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px rgba(14, 124, 134, 0.15); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.alert { padding: 0.8rem 1rem; border-radius: 10px; margin-top: 1rem; font-size: 0.95rem; }
+.alert--ok { background: #e3f6ec; color: #17653b; }
+.alert--error { background: #fde8e4; color: #9a2f1f; }
