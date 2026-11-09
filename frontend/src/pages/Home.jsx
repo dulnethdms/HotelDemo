@@ -26,7 +26,7 @@ export default function Home() {
       <section className="hero" style={{ '--hero': `url(${hero})` }}>
         <div className="hero__content container">
           <div className="hero__logo"><Logo light size={64} /></div>
-          <h1>{text('hotel_name', 'Ocean Paradise Resort')}</h1>
+          <h1>{text('hotel_name', 'Mora Mila - Arugam Bay')}</h1>
           <p className="hero__tagline">{text('tagline', 'Where the horizon becomes your home')}</p>
           <p className="hero__sub">{text('hero_subtitle')}</p>
           <div className="hero__cta">
@@ -49,11 +49,11 @@ export default function Home() {
                 <div key={l}><strong>{n}</strong><span>{l}</span></div>
               ))}
             </div>
-            <Link to="/about" className="btn btn--outline">Our Story</Link>
+            <Link to="/about" className="btn btn--outline">About Us</Link>
           </Reveal>
           <Reveal className="split__media" delay={150}>
-            <SmartImg src={text('intro_image')} alt="Ocean Paradise Resort grounds" />
-            <div className="split__badge">Beachfront<br />since 2009</div>
+            <SmartImg src={text('intro_image')} alt="Mora Mila Hotel grounds" />
+            <div className="split__badge">Beachfront<br />since 2026</div>
           </Reveal>
         </div>
       </section>
