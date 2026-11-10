@@ -50,7 +50,9 @@
   margin-bottom: 0.3rem; 
   
 }
-.hero__location { font-size: 0.68em; white-space: nowrap; }
+.hero__title-main,
+.hero__location { display: block; }
+.hero__location { font-size: clamp(1.8rem, 4vw, 3.2rem); margin-top: 0.15rem; }
 .hero__tagline { font-family: var(--ff-head); font-style: italic; font-size: clamp(1.4rem, 3vw, 2.1rem); color: var(--gold); margin-bottom: 0.8rem; }
 .hero__sub { max-width: 620px; margin: 0 auto 2.2rem; font-weight: 300; color: #e8f1f5; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }

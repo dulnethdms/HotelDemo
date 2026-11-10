@@ -28,8 +28,8 @@ export default function Home() {
         <div className="hero__content container">
           <div className="hero__logo"><Logo light size={64} /></div>
           <h1>
-            <span>{hotelName}</span>
-            {location && <span className="hero__location"> - {location}</span>}
+            <span className="hero__title-main">{hotelName}</span>
+            {location && <span className="hero__location">- {location}</span>}
           </h1>
           <p className="hero__tagline">{text('tagline', 'Where the horizon becomes your home')}</p>
           <p className="hero__sub">{text('hero_subtitle')}</p>
