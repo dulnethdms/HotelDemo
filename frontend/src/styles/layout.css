@@ -45,13 +45,14 @@
 .hero__content { padding: 7rem 0 5rem; animation: heroIn 1.4s var(--ease) both; }
 .hero__logo { display: flex; justify-content: center; margin-bottom: 1.4rem; }
 .hero h1 { 
-  font-size: 12.8 rem;;
   color: #ffffff; 
   text-shadow: 0 6px 30px rgba(0, 0, 0, 0.35); 
   margin-bottom: 0.3rem; 
   
 }
-.hero__title-main,
+.hero__title-main {
+  font-size: clamp(3rem, 7vw, 10rem);
+}
 .hero__location {
    display: block; }
 .hero__location { 
