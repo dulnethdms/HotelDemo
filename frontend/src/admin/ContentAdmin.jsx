@@ -4,7 +4,7 @@ import { api } from '../api';
 // Every editable key: [key, label, type]. 'json' = list editing in JSON (validated before saving).
 const SECTIONS = [
   ['Hotel & Home Page', [
-    ['hotel_name', 'Hotel name', 'text'], ['tagline', 'Tagline', 'text'], ['hero_subtitle', 'Hero subtitle', 'textarea'],
+    ['tagline', 'Tagline', 'text'], ['hero_subtitle', 'Hero subtitle', 'textarea'],
     ['hero_image', 'Hero image URL', 'text'], ['intro_title', 'Introduction title', 'text'], ['intro_text', 'Introduction text', 'textarea'],
     ['intro_image', 'Introduction image URL', 'text'],
     ['stat_1', 'Stat 1 (value|label)', 'text'], ['stat_2', 'Stat 2 (value|label)', 'text'], ['stat_3', 'Stat 3 (value|label)', 'text'], ['stat_4', 'Stat 4 (value|label)', 'text'],

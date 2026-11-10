@@ -18,7 +18,6 @@ export default function Home() {
   const shownPackages = featured.length ? featured : packages.slice(0, 3);
   const stats = ['stat_1', 'stat_2', 'stat_3', 'stat_4'].map((k) => text(k).split('|')).filter((s) => s[0]);
   const hero = assetUrl(text('hero_image', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80'));
-  const [hotelName, location] = text('hotel_name', 'Mora Mila - Arugam Bay').split(' - ');
 
   return (
     <>
@@ -28,8 +27,8 @@ export default function Home() {
         <div className="hero__content container">
           <div className="hero__logo"><Logo light size={64} /></div>
           <h1>
-            <span className="hero__title-main">{hotelName}</span>
-            {location && <span className="hero__location">- {location}</span>}
+            <span className="hero__title-main">Mora Mila</span>
+            <span className="hero__location">- Arugam Bay</span>
           </h1>
           <p className="hero__tagline">{text('tagline', 'Where the horizon becomes your home')}</p>
           <p className="hero__sub">{text('hero_subtitle')}</p>
