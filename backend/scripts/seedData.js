@@ -72,6 +72,13 @@ const gallery = [
   ['Snorkelling excursion', 'activities', PHOTOS.dive], ['Sunrise kayaking', 'activities', PHOTOS.kayak],
 ].map(([title, category, id]) => ({ title, category, image_url: img(id, 1200) }));
 
+gallery.push(
+  { title: 'Ocean view room', category: 'rooms', image_url: '/uploads/ocean-view-room.svg' },
+  { title: 'Infinity pool at sunset', category: 'pool', image_url: '/uploads/sunset-pool.svg' },
+  { title: 'Private beach escape', category: 'beach', image_url: '/uploads/private-beach.svg' },
+  { title: 'Seaside dining', category: 'restaurant', image_url: '/uploads/seaside-dining.svg' },
+);
+
 const j = (v) => JSON.stringify(v);
 
 const content = {

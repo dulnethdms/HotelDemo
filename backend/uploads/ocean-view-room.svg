@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y2="1"><stop stop-color="#b8e4ed"/><stop offset="1" stop-color="#f8d7ad"/></linearGradient>
+    <linearGradient id="sea" x1="0" x2="1"><stop stop-color="#1b7189"/><stop offset="1" stop-color="#55b5bd"/></linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <rect y="420" width="1200" height="380" fill="url(#sea)"/>
+  <path d="M0 470 Q180 420 360 470 T720 470 T1200 470 V800 H0Z" fill="#e9c38f"/>
+  <rect x="150" y="235" width="900" height="250" rx="8" fill="#f7efe0"/>
+  <rect x="205" y="275" width="280" height="180" fill="#71c7d0"/>
+  <rect x="715" y="275" width="280" height="180" fill="#71c7d0"/>
+  <path d="M250 500h700v35H250z" fill="#8f6048"/>
+  <path d="M430 500h340v140H430z" fill="#b77c58"/>
+  <path d="M470 535h260v105H470z" fill="#f4d8b1"/>
+  <text x="600" y="725" text-anchor="middle" fill="#fff8e9" font-family="Georgia" font-size="42">Ocean View Room</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs><linearGradient id="sky" x1="0" x2="0" y2="1"><stop stop-color="#352b67"/><stop offset=".55" stop-color="#ed7655"/><stop offset="1" stop-color="#f5c46b"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="850" cy="390" r="95" fill="#ffd88b"/>
+  <path d="M0 470 Q220 420 430 470 T850 470 T1200 470 V800 H0Z" fill="#164b68"/>
+  <path d="M100 560 Q350 490 600 560 T1100 560 V800 H100Z" fill="#4ab7c3" opacity=".8"/>
+  <path d="M0 620 Q280 570 600 620 T1200 620" fill="none" stroke="#bceff0" stroke-width="8" opacity=".65"/>
+  <path d="M180 800V560h60v240M950 800V540h60v260" stroke="#2c304c" stroke-width="28"/>
+  <text x="600" y="735" text-anchor="middle" fill="#fff5da" font-family="Georgia" font-size="42">Infinity Pool at Sunset</text>
+</svg>

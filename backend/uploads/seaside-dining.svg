@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs><linearGradient id="bg" x1="0" x2="0" y2="1"><stop stop-color="#123d56"/><stop offset="1" stop-color="#d47c56"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="970" cy="150" r="80" fill="#ffd78d" opacity=".85"/>
+  <path d="M0 575 Q240 530 480 575 T960 575 T1200 575 V800 H0Z" fill="#173448"/>
+  <path d="M180 640h840v24H180z" fill="#8b513e"/>
+  <path d="M230 664v115M970 664v115" stroke="#8b513e" stroke-width="24"/>
+  <circle cx="600" cy="640" r="75" fill="#d69c5f"/>
+  <circle cx="600" cy="640" r="34" fill="#f4d6a1"/>
+  <path d="M600 570v-110" stroke="#f6c76d" stroke-width="8"/>
+  <path d="M600 460l-35 45h70z" fill="#f6c76d"/>
+  <text x="600" y="735" text-anchor="middle" fill="#fff5da" font-family="Georgia" font-size="42">Seaside Dining</text>
+</svg>
