@@ -1,7 +1,7 @@
 {
   "name": "ocean-paradise-backend",
   "version": "1.0.0",
-  "description": "Express + MongoDB API for the Ocean Paradise Resort showcase website",
+  "description": "Express + Supabase API for the Ocean Paradise Resort showcase website",
   "main": "server.js",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "node": ">=18"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -20,7 +21,6 @@
     "express-rate-limit": "^7.4.0",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.22.0",
     "morgan": "^1.10.0",
     "multer": "^2.0.2"
   }

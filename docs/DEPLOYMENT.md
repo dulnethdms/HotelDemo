@@ -12,7 +12,7 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt in
 sudo npm i -g pm2
 ```
 
-Use MongoDB Atlas or MongoDB Community Edition and set `MONGODB_URI` and `MONGODB_DB` in the backend environment.
+Create a Supabase project, run `database/schema.sql` in its SQL Editor, and set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in the backend environment.
 
 ### 2. Upload the project and build
 
@@ -80,7 +80,7 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com   # free HTTPS + au
 - [ ] Replace `www.example.com` in `frontend/index.html`, `public/robots.txt`, `public/sitemap.xml`, then rebuild (`npm run build`).
 - [ ] Update the JSON-LD block in `index.html` with the real address and phone.
 - [ ] Firewall: allow only 80/443/SSH (`sudo ufw allow 'Nginx Full' && sudo ufw allow OpenSSH && sudo ufw enable`).
-- [ ] Back up the MongoDB database nightly (for example with `mongodump`) **and** `backend/uploads/`.
+- [ ] Back up the Supabase database nightly and `backend/uploads/`.
 - [ ] Submit the sitemap to Google Search Console.
 
 ### Updating the site later
@@ -95,10 +95,10 @@ cd ../frontend && npm ci && npm run build      # served immediately, no restart 
 
 - **Frontend** (Netlify, Vercel, Cloudflare Pages, S3+CloudFront): build command `npm run build`, publish directory `dist`. Add an SPA rewrite so every path serves `index.html` (e.g. Netlify `_redirects`: `/* /index.html 200`). Set build env vars:
   `VITE_API_URL=https://api.yourdomain.com/api` and `VITE_ASSET_URL=https://api.yourdomain.com`.
-- **Backend** (Render, Railway, Fly.io, a VPS): start command `node server.js`; set `CLIENT_URL=https://www.yourdomain.com`, the MongoDB, and JWT variables. Run `npm run setup` once against the deployment database.
+- **Backend** (Render, Railway, Fly.io, a VPS): start command `node server.js`; set `CLIENT_URL=https://www.yourdomain.com`, the Supabase, and JWT variables. Run `npm run setup` once against the deployment database.
 - The CSP in `server.js` only governs responses served by Express; configure equivalent headers on your static host if desired.
 - ⚠️ **Uploaded images are stored on the API server's disk.** On platforms with ephemeral filesystems (Render free tier, Heroku, etc.) they disappear on redeploy – attach a persistent disk/volume, or switch the upload middleware to S3/Cloudflare R2.
 
 ## Docker (optional sketch)
 
-Run MongoDB as a container, mount a volume for `backend/uploads`, and use `node:20-alpine` for the app (`npm ci --omit=dev && node server.js`) after building `frontend/dist` in a multi-stage build.
+Use Supabase as the database, mount a volume for `backend/uploads`, and use `node:20-alpine` for the app (`npm ci --omit=dev && node server.js`) after building `frontend/dist` in a multi-stage build.

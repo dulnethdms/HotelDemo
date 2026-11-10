@@ -41,8 +41,8 @@ app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '7d' }));
 
 app.get('/api/health', async (req, res, next) => {
   try {
-    await (await db.getDb()).command({ ping: 1 });
-    res.json({ status: 'ok', database: 'mongodb' });
+    await db.health();
+    res.json({ status: 'ok', database: 'supabase' });
   } catch (err) {
     next(err);
   }
@@ -72,9 +72,9 @@ app.use((err, req, res, next) => {
 });
 
 const port = Number(process.env.PORT) || 5000;
-db.getDb()
+db.health()
   .then(() => app.listen(port, () => console.log(`Ocean Paradise API listening on http://localhost:${port}`)))
   .catch((err) => {
-    console.error(`FATAL: Could not connect to MongoDB: ${err.message}`);
+    console.error(`FATAL: Could not connect to Supabase: ${err.message}`);
     process.exit(1);
   });

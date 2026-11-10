@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - **Node.js 18+** (`node -v`)
-- **MongoDB 6+** running locally or a MongoDB Atlas connection string
+- **Supabase project** with access to the SQL Editor
 - npm (bundled with Node)
 
 ## 1. Get the code
@@ -23,8 +23,8 @@ Edit `backend/.env`:
 
 | Variable | What to set |
 |---|---|
-| `MONGODB_URI` | MongoDB connection string (default `mongodb://127.0.0.1:27017`) |
-| `MONGODB_DB` | database name (default `ocean_paradise`) |
+| `SUPABASE_URL` | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service-role key; keep it server-side |
 | `JWT_SECRET` | long random string – generate with `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"` |
 | `ADMIN_USERNAME`, `ADMIN_PASSWORD` | first admin login (password ≥ 10 chars) |
 | `CLIENT_URL` | `http://localhost:5173` in development |
@@ -33,11 +33,11 @@ Install and initialise:
 
 ```bash
 npm install
-npm run setup     # creates indexes, the admin user, and sample content
+npm run setup     # creates the admin user and sample content
 npm run dev       # http://localhost:5000  (check /api/health)
 ```
 
-`npm run setup` is safe to re-run – it never overwrites existing data or the admin password.
+Before `npm run setup`, run `database/schema.sql` in the Supabase SQL Editor. The setup is safe to re-run – it never overwrites existing data or the admin password.
 
 ## 3. Run the frontend
 
@@ -57,7 +57,7 @@ Open <http://localhost:5173/admin/login> and sign in with the credentials from `
 
 | Problem | Fix |
 |---|---|
-| `MongoServerSelectionError` | MongoDB is not running or `MONGODB_URI` is incorrect |
+| `Supabase` errors | Check `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and that `database/schema.sql` was run |
 | `FATAL: JWT_SECRET must be set` | add a 24+ character `JWT_SECRET` to `.env` |
 | Site loads but has no text/data | the API isn't running, or `npm run setup` wasn't executed |
 | CORS error | `CLIENT_URL` must exactly match the browser origin (scheme + host + port) |

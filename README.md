@@ -10,7 +10,7 @@ A modern, responsive showcase website for a luxury beachfront hotel, with a secu
 |---|---|
 | Frontend | React 18, React Router 6, Vite, HTML5, **custom CSS only** (no Bootstrap / Tailwind) |
 | Backend | Node.js, Express.js |
-| Database | MongoDB 6+ |
+| Database | Supabase |
 | Auth | JWT (Bearer token) + bcrypt password hashing (`bcryptjs`, a pure-JS bcrypt implementation) |
 
 ## Features
@@ -35,7 +35,7 @@ ocean-paradise-resort/
 │   │   └── seedData.js            # sample packages, promotions, gallery, site text
 │   ├── uploads/                   # uploaded images (git-ignored)
 │   └── src/
-│       ├── db.js                  # MongoDB connection and collections
+│       ├── db.js                  # Supabase connection and table adapter
 │       ├── middleware/{auth,upload}.js
 │       └── routes/{auth,packages,promotions,gallery,content,contact,upload}.js
 ├── frontend/
@@ -77,7 +77,7 @@ See [docs/INSTALLATION.md](docs/INSTALLATION.md) and [docs/DEPLOYMENT.md](docs/D
 
 ## Database tables
 
-| Collection | Purpose |
+| Table | Purpose |
 |---|---|
 | `admins` | staff accounts (bcrypt hashes) |
 | `packages` | rooms & packages (price, JSON feature list, special offer, featured/active flags) |
