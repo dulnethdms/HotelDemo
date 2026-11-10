@@ -68,8 +68,8 @@
   justify-content: center;
  }
  .hero__cta .btn {
-  padding: 0.75rem 1.5rem;
-  font-size: 0.45rem;
+  padding: 0.25rem 1rem;
+  font-size: 0.55rem;
 }
 .hero__scroll { position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); width: 26px; height: 44px; border: 2px solid rgba(255, 255, 255, 0.8); border-radius: 20px; }
 .hero__scroll span { position: absolute; top: 8px; left: 50%; width: 4px; height: 8px; margin-left: -2px; background: #fff; border-radius: 2px; animation: scrollDot 1.8s infinite; }
