@@ -26,7 +26,14 @@ export default function Home() {
       <section className="hero" style={{ '--hero': `url(${hero})` }}>
         <div className="hero__content container">
           <div className="hero__logo"><Logo light size={64} /></div>
-          <h1>{text('hotel_name', 'Mora Mila - Arugam Bay')}</h1>
+          <h1>
+            {text('hotel_name', 'Mora Mila - Arugam Bay').split(' - ').map((part, index) => (
+              <span key={part}>
+                {index > 0 && <br />}
+                {index > 0 ? `- ${part}` : part}
+              </span>
+            ))}
+          </h1>
           <p className="hero__tagline">{text('tagline', 'Where the horizon becomes your home')}</p>
           <p className="hero__sub">{text('hero_subtitle')}</p>
           <div className="hero__cta">
