@@ -32,11 +32,14 @@ export default function Home() {
           </h1>
           <p className="hero__tagline">{text('tagline', 'Where the horizon becomes your home')}</p>
           <p className="hero__sub">{text('hero_subtitle')}</p>
+           
+          {/*
           <div className="hero__cta">
             <Link to="/accommodation" className="btn btn--gold">Explore Rooms & Packages</Link>
             <Link to="/promotions" className="btn btn--ghost">View Promotions</Link>
             <Link to="/contact" className="btn btn--ghost">Contact Us</Link>
           </div>
+          */}
         </div>
         <a href="#welcome" className="hero__scroll" aria-label="Scroll down"><span /></a>
       </section>
