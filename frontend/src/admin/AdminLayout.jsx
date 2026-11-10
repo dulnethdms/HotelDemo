@@ -14,7 +14,7 @@ export default function AdminLayout() {
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
-    document.title = 'Admin | Mora Mila Hotel';
+    document.title = 'Admin | Sample Hotel';
     if (!getToken()) return nav('/admin/login', { replace: true });
     api.get('/auth/me').then((r) => setAdmin(r.admin)).catch(() => { setToken(null); nav('/admin/login', { replace: true }); });
   }, [nav]);

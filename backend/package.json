@@ -1,7 +1,7 @@
 {
   "name": "ocean-paradise-backend",
   "version": "1.0.0",
-  "description": "Express + Supabase API for the Mora Mila Hotel showcase website",
+  "description": "Express + Supabase API for the Sample Hotel showcase website",
   "main": "server.js",
   "private": true,
   "scripts": {

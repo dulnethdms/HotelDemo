@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer__bottom">
-        <div className="container">© {new Date().getFullYear()} {text('hotel_name', 'Mora Mila Hotel')}. All rights reserved.</div>
+        <div className="container">© {new Date().getFullYear()} {text('hotel_name', 'Sample Hotel')}. All rights reserved.</div>
       </div>
     </footer>
   );

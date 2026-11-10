@@ -14,7 +14,7 @@ export default function Promotions() {
 
   return (
     <>
-      <Seo title="Promotions" description="Seasonal promotions, holiday discounts and special event packages at Mora Mila Hotel." />
+      <Seo title="Promotions" description="Seasonal promotions, holiday discounts and special event packages at Sample Hotel." />
       <PageHeader title="Promotions" subtitle="Seasonal offers, holiday discounts & special events" />
       <section className="section">
         <div className="container">

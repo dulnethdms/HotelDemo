@@ -31,7 +31,7 @@ export default function Navbar() {
   return (
     <header className={`navbar ${solid ? 'navbar--solid' : ''}`}>
       <div className="container navbar__inner">
-        <Link to="/" aria-label="Mora Mila Hotel home"><Logo light={!solid} /></Link>
+        <Link to="/" aria-label="Sample Hotel home"><Logo light={!solid} /></Link>
         <button className={`burger ${open ? 'is-open' : ''}`} aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>
           <span /><span /><span />
         </button>

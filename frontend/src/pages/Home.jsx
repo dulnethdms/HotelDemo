@@ -27,7 +27,7 @@ export default function Home() {
         <div className="hero__content container">
           <div className="hero__logo"><Logo light size={64} /></div>
           <h1>
-            <span className="hero__title-main">Mora Mila</span>
+            <span className="hero__title-main">Sample Hotel</span>
             <span className="hero__location">Arugam Bay</span>
           </h1>
           <p className="hero__tagline">{text('tagline', 'Where the horizon becomes your home')}</p>
