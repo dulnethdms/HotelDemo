@@ -8,7 +8,7 @@ export default function About() {
   const { text, json } = useContent();
   return (
     <>
-      <Seo title="About Us" description="The story, mission and vision behind Ocean Paradise Resort, and why guests choose us." />
+      <Seo title="About Us" description="The story, mission and vision behind Mora Mila Hotel, and why guests choose us." />
       <PageHeader title="About Us" subtitle="Barefoot luxury, heartfelt hospitality" />
 
       <section className="section">
@@ -31,7 +31,7 @@ export default function About() {
 
       <section className="section">
         <div className="container">
-          <SectionTitle eyebrow="Why Choose Us" title="The Ocean Paradise difference" />
+          <SectionTitle eyebrow="Why Choose Us" title="The Mora Mila Hotel difference" />
           <div className="grid grid--4">
             {json('why_choose').map((w, i) => (
               <Reveal key={w.title} className="why" delay={i * 80}>

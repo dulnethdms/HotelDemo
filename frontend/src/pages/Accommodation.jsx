@@ -14,7 +14,7 @@ export default function Accommodation() {
 
   return (
     <>
-      <Seo title="Accommodation & Packages" description="Ocean-view rooms, honeymoon, family and luxury villa packages at Ocean Paradise Resort." />
+      <Seo title="Accommodation & Packages" description="Ocean-view rooms, honeymoon, family and luxury villa packages at Mora Mila Hotel." />
       <PageHeader title="Accommodation & Packages" subtitle="Rooms, suites and curated experiences by the sea" />
       <section className="section">
         <div className="container">

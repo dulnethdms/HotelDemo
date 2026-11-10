@@ -16,7 +16,7 @@ export default function Gallery() {
   return (
     <>
       <Seo title="Gallery" description="Photos of our rooms, private beach, swimming pool, restaurant and resort activities." />
-      <PageHeader title="Gallery" subtitle="A glimpse of life at Ocean Paradise" />
+      <PageHeader title="Gallery" subtitle="A glimpse of life at Mora Mila Hotel" />
       <section className="section">
         <div className="container">
           <div className="filters" role="tablist">

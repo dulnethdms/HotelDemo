@@ -1,4 +1,4 @@
-# 🌊 Ocean Paradise Resort
+# 🌊 Mora Mila Hotel
 
 A modern, responsive showcase website for a luxury beachfront hotel, with a secure admin panel for hotel staff to manage content.
 
@@ -133,4 +133,4 @@ Base URL: `/api`. 🔒 = requires `Authorization: Bearer <token>`.
 
 ## Licence
 
-Provided as a starter project for the Ocean Paradise Resort. Adapt freely.
+Provided as a starter project for Mora Mila Hotel. Adapt freely.

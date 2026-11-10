@@ -82,12 +82,12 @@ gallery.push(
 const j = (v) => JSON.stringify(v);
 
 const content = {
-  hotel_name: 'Ocean Paradise Resort',
+  hotel_name: 'Mora Mila Hotel',
   tagline: 'Where the horizon becomes your home',
   hero_image: img(PHOTOS.beach, 2000),
   hero_subtitle: 'A luxury beachfront sanctuary of golden sand, crystal water and effortless elegance.',
   intro_title: 'A private stretch of paradise',
-  intro_text: 'Nestled along a pristine crescent of white sand, Ocean Paradise Resort blends barefoot luxury with warm, personal hospitality. Our 64 rooms, suites and villas open to the sea, and every day offers something new: sunrise yoga, fresh seafood suppers, coral reef snorkelling or simply an unhurried afternoon by the pool.',
+  intro_text: 'Nestled along a pristine crescent of white sand, Mora Mila Hotel blends barefoot luxury with warm, personal hospitality. Our 64 rooms, suites and villas open to the sea, and every day offers something new: sunrise yoga, fresh seafood suppers, coral reef snorkelling or simply an unhurried afternoon by the pool.',
   intro_image: img(PHOTOS.resort, 1200),
   stat_1: '64|Rooms, suites & villas', stat_2: '300m|Of private beach', stat_3: '4.9|Guest rating', stat_4: '15+|Years of hospitality',
   highlights: j([
@@ -104,7 +104,7 @@ const content = {
     { name: 'The Fernandez Family', country: 'Spain', rating: 5, text: 'Our kids did not want to leave! The kids club and snorkelling trips were fantastic, and the room was spotless.' },
   ]),
   story_title: 'Our Story',
-  story_text: 'Ocean Paradise began in 2009 as a family dream: a handful of beach cottages built by local craftsmen on an empty bay. Guests came for the sea and returned for the welcome. Today we are a 64-key resort, but we have kept the spirit of those first cottages: handmade details, honest hospitality and deep respect for the coastline we call home.',
+  story_text: 'Mora Mila Hotel began in 2009 as a family dream: a handful of beach cottages built by local craftsmen on an empty bay. Guests came for the sea and returned for the welcome. Today we are a 64-key resort, but we have kept the spirit of those first cottages: handmade details, honest hospitality and deep respect for the coastline we call home.',
   about_image: img(PHOTOS.beach2, 1200),
   mission: 'To create restorative, authentic seaside experiences that delight our guests while protecting the coast and supporting the community that welcomes us.',
   vision: 'To be recognised as the most loved beachfront retreat in the region, a place where hospitality, nature and sustainability thrive together.',

@@ -12,12 +12,12 @@ export default function Location() {
 
   return (
     <>
-      <Seo title="Location" description="Find Ocean Paradise Resort: address, interactive map, directions and nearby attractions." />
+      <Seo title="Location" description="Find Mora Mila Hotel: address, interactive map, directions and nearby attractions." />
       <PageHeader title="Location" subtitle="Find your way to the shore" />
       <section className="section">
         <div className="container location">
           <Reveal className="location__map">
-            <iframe title="Ocean Paradise Resort on Google Maps" src={mapSrc} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+            <iframe title="Mora Mila Hotel on Google Maps" src={mapSrc} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
           </Reveal>
           <Reveal className="location__info" delay={120}>
             <h2>Visit Us</h2>

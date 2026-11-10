@@ -30,7 +30,7 @@ export default function Contact() {
 
   return (
     <>
-      <Seo title="Contact" description="Contact Ocean Paradise Resort for enquiries about rooms, packages, events and promotions." />
+      <Seo title="Contact" description="Contact Mora Mila Hotel for enquiries about rooms, packages, events and promotions." />
       <PageHeader title="Contact Us" subtitle="We would love to hear from you" />
       <section className="section">
         <div className="container contact">

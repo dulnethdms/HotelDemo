@@ -73,7 +73,7 @@ app.use((err, req, res, next) => {
 
 const port = Number(process.env.PORT) || 5000;
 db.health()
-  .then(() => app.listen(port, () => console.log(`Ocean Paradise API listening on http://localhost:${port}`)))
+  .then(() => app.listen(port, () => console.log(`Mora Mila Hotel API listening on http://localhost:${port}`)))
   .catch((err) => {
     console.error(`FATAL: Could not connect to Supabase: ${err.message}`);
     process.exit(1);
