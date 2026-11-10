@@ -22,33 +22,27 @@ function validate(b = {}) {
   return {
     errors,
     data: {
-      title,
-      category: CATEGORIES.includes(b.category) ? b.category : 'seasonal',
-      description,
-      discount_label: String(b.discount_label || '').trim() || null,
-      image_url,
-      valid_from: from,
-      valid_until: until,
-      is_active: b.is_active === false || b.is_active === 0 ? 0 : 1,
+      title, category: CATEGORIES.includes(b.category) ? b.category : 'seasonal', description,
+      discount_label: String(b.discount_label || '').trim() || null, image_url,
+      valid_from: from, valid_until: until, is_active: !(b.is_active === false || b.is_active === 0),
     },
   };
 }
 
-// PUBLIC: active promotions that have not expired
 router.get('/', async (req, res, next) => {
   try {
-    const [rows] = await db.query(
-      `SELECT * FROM promotions
-       WHERE is_active = 1 AND (valid_until IS NULL OR valid_until >= CURDATE())
-       ORDER BY valid_until IS NULL, valid_until, id DESC`
-    );
+    const today = new Date().toISOString().slice(0, 10);
+    const rows = await (await db.collection('promotions')).find({
+      is_active: true,
+      $or: [{ valid_until: null }, { valid_until: { $gte: today } }],
+    }).sort({ valid_until: 1, id: -1 }).toArray();
     res.json(rows.map(parse));
   } catch (e) { next(e); }
 });
 
 router.get('/admin/all', requireAuth, async (req, res, next) => {
   try {
-    const [rows] = await db.query('SELECT * FROM promotions ORDER BY id DESC');
+    const rows = await (await db.collection('promotions')).find().sort({ id: -1 }).toArray();
     res.json(rows.map(parse));
   } catch (e) { next(e); }
 });
@@ -57,9 +51,9 @@ router.post('/', requireAuth, async (req, res, next) => {
   try {
     const { errors, data } = validate(req.body);
     if (errors.length) return res.status(400).json({ error: errors.join('. ') });
-    const [r] = await db.query('INSERT INTO promotions SET ?', [data]);
-    const [rows] = await db.query('SELECT * FROM promotions WHERE id = ?', [r.insertId]);
-    res.status(201).json(parse(rows[0]));
+    const record = { id: await db.nextId('promotions'), ...data, created_at: new Date(), updated_at: new Date() };
+    await (await db.collection('promotions')).insertOne(record);
+    res.status(201).json(parse(record));
   } catch (e) { next(e); }
 });
 
@@ -67,21 +61,24 @@ router.put('/:id', requireAuth, async (req, res, next) => {
   try {
     const { errors, data } = validate(req.body);
     if (errors.length) return res.status(400).json({ error: errors.join('. ') });
-    const [old] = await db.query('SELECT image_url FROM promotions WHERE id = ?', [req.params.id]);
-    if (!old[0]) return res.status(404).json({ error: 'Not found' });
-    await db.query('UPDATE promotions SET ? WHERE id = ?', [data, req.params.id]);
-    if (old[0].image_url !== data.image_url) removeUpload(old[0].image_url);
-    const [rows] = await db.query('SELECT * FROM promotions WHERE id = ?', [req.params.id]);
-    res.json(parse(rows[0]));
+    const promotions = await db.collection('promotions');
+    const id = Number(req.params.id);
+    const old = await promotions.findOne({ id });
+    if (!old) return res.status(404).json({ error: 'Not found' });
+    const record = { ...old, ...data, updated_at: new Date() };
+    await promotions.replaceOne({ id }, record);
+    if (old.image_url !== data.image_url) removeUpload(old.image_url);
+    res.json(parse(record));
   } catch (e) { next(e); }
 });
 
 router.delete('/:id', requireAuth, async (req, res, next) => {
   try {
-    const [old] = await db.query('SELECT image_url FROM promotions WHERE id = ?', [req.params.id]);
-    if (!old[0]) return res.status(404).json({ error: 'Not found' });
-    await db.query('DELETE FROM promotions WHERE id = ?', [req.params.id]);
-    removeUpload(old[0].image_url);
+    const promotions = await db.collection('promotions');
+    const old = await promotions.findOne({ id: Number(req.params.id) });
+    if (!old) return res.status(404).json({ error: 'Not found' });
+    await promotions.deleteOne({ id: old.id });
+    removeUpload(old.image_url);
     res.json({ message: 'Deleted' });
   } catch (e) { next(e); }
 });

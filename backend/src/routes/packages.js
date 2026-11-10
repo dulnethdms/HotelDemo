@@ -5,7 +5,7 @@ const { removeUpload } = require('../middleware/upload');
 
 const parse = (r) => ({
   ...r,
-  features: typeof r.features === 'string' ? JSON.parse(r.features) : r.features || [],
+  features: Array.isArray(r.features) ? r.features : [],
   is_featured: !!r.is_featured,
   is_active: !!r.is_active,
 });
@@ -27,33 +27,26 @@ function validate(b = {}) {
   return {
     errors,
     data: {
-      name,
-      category: b.category === 'package' ? 'package' : 'room',
-      description,
-      price,
-      price_note: String(b.price_note || '').trim() || null,
-      image_url,
-      features: JSON.stringify(features),
+      name, category: b.category === 'package' ? 'package' : 'room', description, price,
+      price_note: String(b.price_note || '').trim() || null, image_url, features,
       special_offer: String(b.special_offer || '').trim() || null,
-      is_featured: b.is_featured ? 1 : 0,
-      is_active: b.is_active === false || b.is_active === 0 ? 0 : 1,
+      is_featured: !!b.is_featured, is_active: !(b.is_active === false || b.is_active === 0),
       sort_order: Number.parseInt(b.sort_order, 10) || 0,
     },
   };
 }
 
-// PUBLIC: active packages
 router.get('/', async (req, res, next) => {
   try {
-    const [rows] = await db.query('SELECT * FROM packages WHERE is_active = 1 ORDER BY sort_order, id');
+    const packages = await db.collection('packages');
+    const rows = await packages.find({ is_active: true }).sort({ sort_order: 1, id: 1 }).toArray();
     res.json(rows.map(parse));
   } catch (e) { next(e); }
 });
 
-// ADMIN: all packages (must be before '/:id')
 router.get('/admin/all', requireAuth, async (req, res, next) => {
   try {
-    const [rows] = await db.query('SELECT * FROM packages ORDER BY sort_order, id');
+    const rows = await (await db.collection('packages')).find().sort({ sort_order: 1, id: 1 }).toArray();
     res.json(rows.map(parse));
   } catch (e) { next(e); }
 });
@@ -62,9 +55,9 @@ router.post('/', requireAuth, async (req, res, next) => {
   try {
     const { errors, data } = validate(req.body);
     if (errors.length) return res.status(400).json({ error: errors.join('. ') });
-    const [r] = await db.query('INSERT INTO packages SET ?', [data]);
-    const [rows] = await db.query('SELECT * FROM packages WHERE id = ?', [r.insertId]);
-    res.status(201).json(parse(rows[0]));
+    const record = { id: await db.nextId('packages'), ...data, created_at: new Date(), updated_at: new Date() };
+    await (await db.collection('packages')).insertOne(record);
+    res.status(201).json(parse(record));
   } catch (e) { next(e); }
 });
 
@@ -72,21 +65,24 @@ router.put('/:id', requireAuth, async (req, res, next) => {
   try {
     const { errors, data } = validate(req.body);
     if (errors.length) return res.status(400).json({ error: errors.join('. ') });
-    const [old] = await db.query('SELECT image_url FROM packages WHERE id = ?', [req.params.id]);
-    if (!old[0]) return res.status(404).json({ error: 'Not found' });
-    await db.query('UPDATE packages SET ? WHERE id = ?', [data, req.params.id]);
-    if (old[0].image_url !== data.image_url) removeUpload(old[0].image_url);
-    const [rows] = await db.query('SELECT * FROM packages WHERE id = ?', [req.params.id]);
-    res.json(parse(rows[0]));
+    const packages = await db.collection('packages');
+    const id = Number(req.params.id);
+    const old = await packages.findOne({ id });
+    if (!old) return res.status(404).json({ error: 'Not found' });
+    const record = { ...old, ...data, updated_at: new Date() };
+    await packages.replaceOne({ id }, record);
+    if (old.image_url !== data.image_url) removeUpload(old.image_url);
+    res.json(parse(record));
   } catch (e) { next(e); }
 });
 
 router.delete('/:id', requireAuth, async (req, res, next) => {
   try {
-    const [old] = await db.query('SELECT image_url FROM packages WHERE id = ?', [req.params.id]);
-    if (!old[0]) return res.status(404).json({ error: 'Not found' });
-    await db.query('DELETE FROM packages WHERE id = ?', [req.params.id]);
-    removeUpload(old[0].image_url);
+    const packages = await db.collection('packages');
+    const old = await packages.findOne({ id: Number(req.params.id) });
+    if (!old) return res.status(404).json({ error: 'Not found' });
+    await packages.deleteOne({ id: old.id });
+    removeUpload(old.image_url);
     res.json({ message: 'Deleted' });
   } catch (e) { next(e); }
 });

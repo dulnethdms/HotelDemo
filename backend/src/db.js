@@ -1,15 +1,33 @@
-const mysql = require('mysql2/promise');
+const { MongoClient } = require('mongodb');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  port: Number(process.env.DB_PORT) || 3306,
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'ocean_paradise',
-  waitForConnections: true,
-  connectionLimit: 10,
-  charset: 'utf8mb4',
-  dateStrings: true, // return DATE columns as 'YYYY-MM-DD' strings
-});
+const client = new MongoClient(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017');
+const dbName = process.env.MONGODB_DB || 'ocean_paradise';
+let databasePromise;
 
-module.exports = pool;
+function getDb() {
+  if (!databasePromise) {
+    databasePromise = client.connect().then(() => client.db(dbName));
+  }
+  return databasePromise;
+}
+
+async function collection(name) {
+  return (await getDb()).collection(name);
+}
+
+async function nextId(sequence) {
+  const counters = await collection('_counters');
+  const result = await counters.findOneAndUpdate(
+    { _id: sequence },
+    { $inc: { value: 1 } },
+    { upsert: true, returnDocument: 'after' }
+  );
+  return (result.value || result).value;
+}
+
+async function close() {
+  await client.close();
+  databasePromise = undefined;
+}
+
+module.exports = { collection, getDb, nextId, close };

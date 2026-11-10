@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - **Node.js 18+** (`node -v`)
-- **MySQL 8+** (or MariaDB 10.5+) running locally, and a MySQL user that can create databases
+- **MongoDB 6+** running locally or a MongoDB Atlas connection string
 - npm (bundled with Node)
 
 ## 1. Get the code
@@ -23,8 +23,8 @@ Edit `backend/.env`:
 
 | Variable | What to set |
 |---|---|
-| `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` | your MySQL connection |
-| `DB_NAME` | database name (default `ocean_paradise`) |
+| `MONGODB_URI` | MongoDB connection string (default `mongodb://127.0.0.1:27017`) |
+| `MONGODB_DB` | database name (default `ocean_paradise`) |
 | `JWT_SECRET` | long random string – generate with `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"` |
 | `ADMIN_USERNAME`, `ADMIN_PASSWORD` | first admin login (password ≥ 10 chars) |
 | `CLIENT_URL` | `http://localhost:5173` in development |
@@ -33,13 +33,11 @@ Install and initialise:
 
 ```bash
 npm install
-npm run setup     # creates DB + 6 tables, the admin user, and sample content
+npm run setup     # creates indexes, the admin user, and sample content
 npm run dev       # http://localhost:5000  (check /api/health)
 ```
 
 `npm run setup` is safe to re-run – it never overwrites existing data or the admin password.
-
-*Prefer SQL only?* `mysql -u root -p < ../database/schema.sql` creates the tables; you would then need to add an admin row yourself, so `npm run setup` is recommended.
 
 ## 3. Run the frontend
 
@@ -59,8 +57,7 @@ Open <http://localhost:5173/admin/login> and sign in with the credentials from `
 
 | Problem | Fix |
 |---|---|
-| `ER_ACCESS_DENIED_ERROR` | wrong `DB_USER` / `DB_PASSWORD` |
-| `ECONNREFUSED 3306` | MySQL isn't running |
+| `MongoServerSelectionError` | MongoDB is not running or `MONGODB_URI` is incorrect |
 | `FATAL: JWT_SECRET must be set` | add a 24+ character `JWT_SECRET` to `.env` |
 | Site loads but has no text/data | the API isn't running, or `npm run setup` wasn't executed |
 | CORS error | `CLIENT_URL` must exactly match the browser origin (scheme + host + port) |

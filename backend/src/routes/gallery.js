@@ -5,18 +5,14 @@ const { upload, removeUpload } = require('../middleware/upload');
 
 const CATEGORIES = ['rooms', 'beach', 'pool', 'restaurant', 'activities'];
 
-// PUBLIC: list (optional ?category=beach)
 router.get('/', async (req, res, next) => {
   try {
-    const { category } = req.query;
-    const [rows] = CATEGORIES.includes(category)
-      ? await db.query('SELECT * FROM gallery WHERE category = ? ORDER BY id DESC', [category])
-      : await db.query('SELECT * FROM gallery ORDER BY id DESC');
+    const filter = CATEGORIES.includes(req.query.category) ? { category: req.query.category } : {};
+    const rows = await (await db.collection('gallery')).find(filter).sort({ id: -1 }).toArray();
     res.json(rows);
   } catch (e) { next(e); }
 });
 
-// ADMIN: upload a gallery image (multipart: image, title, category)
 router.post('/', requireAuth, upload.single('image'), async (req, res, next) => {
   try {
     const title = String(req.body.title || '').trim();
@@ -26,32 +22,38 @@ router.post('/', requireAuth, upload.single('image'), async (req, res, next) => 
       removeUpload(`/uploads/${req.file.filename}`);
       return res.status(400).json({ error: 'Title and a valid category are required' });
     }
-    const url = `/uploads/${req.file.filename}`;
-    const [r] = await db.query('INSERT INTO gallery (title, category, image_url) VALUES (?,?,?)', [title, category, url]);
-    const [rows] = await db.query('SELECT * FROM gallery WHERE id = ?', [r.insertId]);
-    res.status(201).json(rows[0]);
+    const record = {
+      id: await db.nextId('gallery'), title, category,
+      image_url: `/uploads/${req.file.filename}`, created_at: new Date(),
+    };
+    await (await db.collection('gallery')).insertOne(record);
+    res.status(201).json(record);
   } catch (e) { next(e); }
 });
 
-// ADMIN: edit title/category
 router.put('/:id', requireAuth, async (req, res, next) => {
   try {
     const title = String(req.body.title || '').trim();
     if (!title || !CATEGORIES.includes(req.body.category))
       return res.status(400).json({ error: 'Title and a valid category are required' });
-    const [r] = await db.query('UPDATE gallery SET title = ?, category = ? WHERE id = ?', [title, req.body.category, req.params.id]);
-    if (!r.affectedRows) return res.status(404).json({ error: 'Not found' });
-    const [rows] = await db.query('SELECT * FROM gallery WHERE id = ?', [req.params.id]);
-    res.json(rows[0]);
+    const gallery = await db.collection('gallery');
+    const id = Number(req.params.id);
+    const record = await gallery.findOne({ id });
+    if (!record) return res.status(404).json({ error: 'Not found' });
+    record.title = title;
+    record.category = req.body.category;
+    await gallery.replaceOne({ id }, record);
+    res.json(record);
   } catch (e) { next(e); }
 });
 
 router.delete('/:id', requireAuth, async (req, res, next) => {
   try {
-    const [old] = await db.query('SELECT image_url FROM gallery WHERE id = ?', [req.params.id]);
-    if (!old[0]) return res.status(404).json({ error: 'Not found' });
-    await db.query('DELETE FROM gallery WHERE id = ?', [req.params.id]);
-    removeUpload(old[0].image_url);
+    const gallery = await db.collection('gallery');
+    const record = await gallery.findOne({ id: Number(req.params.id) });
+    if (!record) return res.status(404).json({ error: 'Not found' });
+    await gallery.deleteOne({ id: record.id });
+    removeUpload(record.image_url);
     res.json({ message: 'Deleted' });
   } catch (e) { next(e); }
 });

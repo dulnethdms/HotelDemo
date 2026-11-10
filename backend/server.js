@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const db = require('./src/db');
 const { UPLOAD_DIR } = require('./src/middleware/upload');
 
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 24) {
@@ -38,7 +39,14 @@ if (!isProd) app.use(morgan('dev'));
 
 app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '7d' }));
 
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', async (req, res, next) => {
+  try {
+    await (await db.getDb()).command({ ping: 1 });
+    res.json({ status: 'ok', database: 'mongodb' });
+  } catch (err) {
+    next(err);
+  }
+});
 app.use('/api/auth', require('./src/routes/auth'));
 app.use('/api/packages', require('./src/routes/packages'));
 app.use('/api/promotions', require('./src/routes/promotions'));
@@ -64,4 +72,9 @@ app.use((err, req, res, next) => {
 });
 
 const port = Number(process.env.PORT) || 5000;
-app.listen(port, () => console.log(`Ocean Paradise API listening on http://localhost:${port}`));
+db.getDb()
+  .then(() => app.listen(port, () => console.log(`Ocean Paradise API listening on http://localhost:${port}`)))
+  .catch((err) => {
+    console.error(`FATAL: Could not connect to MongoDB: ${err.message}`);
+    process.exit(1);
+  });

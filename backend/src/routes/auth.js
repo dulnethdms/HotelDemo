@@ -19,14 +19,13 @@ router.post('/login', loginLimiter, async (req, res, next) => {
     const { username, password } = req.body || {};
     if (!username || !password) return res.status(400).json({ error: 'Username and password are required' });
 
-    const [rows] = await db.query('SELECT * FROM admins WHERE username = ?', [String(username)]);
-    const admin = rows[0];
+    const admin = await (await db.collection('admins')).findOne({ username: String(username) });
     // Always run a compare to keep response timing similar for unknown users
     const hash = admin ? admin.password_hash : '$2a$12$invalidinvalidinvalidinvalidinvalidinvalidinvalidinvalidiu';
     const ok = await bcrypt.compare(String(password), hash);
     if (!admin || !ok) return res.status(401).json({ error: 'Invalid username or password' });
 
-    await db.query('UPDATE admins SET last_login = NOW() WHERE id = ?', [admin.id]);
+    await (await db.collection('admins')).updateOne({ id: admin.id }, { $set: { last_login: new Date() } });
     const token = jwt.sign({ id: admin.id, username: admin.username }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN || '8h',
     });
@@ -46,12 +45,12 @@ router.put('/password', requireAuth, async (req, res, next) => {
     if (!currentPassword || !newPassword) return res.status(400).json({ error: 'Both passwords are required' });
     if (String(newPassword).length < 10) return res.status(400).json({ error: 'New password must be at least 10 characters' });
 
-    const [rows] = await db.query('SELECT password_hash FROM admins WHERE id = ?', [req.admin.id]);
-    if (!rows[0] || !(await bcrypt.compare(String(currentPassword), rows[0].password_hash)))
+    const admin = await (await db.collection('admins')).findOne({ id: req.admin.id });
+    if (!admin || !(await bcrypt.compare(String(currentPassword), admin.password_hash)))
       return res.status(401).json({ error: 'Current password is incorrect' });
 
     const hash = await bcrypt.hash(String(newPassword), 12);
-    await db.query('UPDATE admins SET password_hash = ? WHERE id = ?', [hash, req.admin.id]);
+    await (await db.collection('admins')).updateOne({ id: req.admin.id }, { $set: { password_hash: hash } });
     res.json({ message: 'Password updated' });
   } catch (err) {
     next(err);
